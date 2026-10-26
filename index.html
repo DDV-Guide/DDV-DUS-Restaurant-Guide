@@ -29,7 +29,7 @@ a{color:var(--accent2);text-decoration:none} img{display:block} h1,h2,h3{font-fa
 .hero-logo{position:static;margin-bottom:14px;line-height:0}
 .hero-logo img{height:clamp(34px,4vw,52px);width:auto;filter:drop-shadow(0 2px 10px rgba(0,0,0,.6))}
 .hero-content{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:0 24px 34px;text-align:left;max-width:1400px;margin:0 auto}
-.hero-content h1{font-size:clamp(2rem,6vw,4rem);font-weight:800;letter-spacing:-.5px;line-height:1.02;text-shadow:0 3px 26px rgba(0,0,0,.8)}
+.hero-content h1{color:#fff;font-size:clamp(2rem,6vw,4rem);font-weight:800;letter-spacing:-.5px;line-height:1.02;text-shadow:0 3px 26px rgba(0,0,0,.8)}
 .hero-content h1 .ddv{color:var(--accent)}
 .hero-content .sub{margin-top:12px;font-size:min(1.15rem,calc((100vw - 48px) / 40));color:#e2e2e8;font-weight:500;max-width:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 12px rgba(0,0,0,.85)}
 .hero-content .credit{margin-top:14px;font-size:.78rem;color:var(--accent);font-weight:600;letter-spacing:.3px;text-shadow:0 2px 10px rgba(0,0,0,.9)}
@@ -305,6 +305,8 @@ html[data-theme="light"] .form-msg.err{color:#b03434;background:rgba(207,67,67,.
 html[data-theme="light"] .close:hover,html[data-theme="light"] .btn{color:#1a1a1a}
 html[data-theme="light"] .btn.ghost{color:var(--txt)}
 html[data-theme="light"] .btn.ghost:hover{background:var(--panel2)}
+html[data-theme="light"] .hero-content h1{color:#fff}
+html[data-theme="light"] .hero-content .sub{color:#e2e2e8}
 html[data-theme="light"] .hero-overlay{background:linear-gradient(180deg,rgba(10,10,11,0) 0%,rgba(10,10,11,0) 45%,rgba(10,10,11,.45) 75%,rgba(10,10,11,.88) 100%)}
 html[data-theme="light"] .card,html[data-theme="light"] .tcard,html[data-theme="light"] .syncbar,html[data-theme="light"] .toolbar,html[data-theme="light"] .top10,html[data-theme="light"] .modal,html[data-theme="light"] .info-item,html[data-theme="light"] footer{transition:background-color .3s ease,border-color .3s ease,color .3s ease}
 
