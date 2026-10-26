@@ -310,6 +310,57 @@ html[data-theme="light"] .hero-content .sub{color:#e2e2e8}
 html[data-theme="light"] .hero-overlay{background:linear-gradient(180deg,rgba(10,10,11,0) 0%,rgba(10,10,11,0) 45%,rgba(10,10,11,.45) 75%,rgba(10,10,11,.88) 100%)}
 html[data-theme="light"] .card,html[data-theme="light"] .tcard,html[data-theme="light"] .syncbar,html[data-theme="light"] .toolbar,html[data-theme="light"] .top10,html[data-theme="light"] .modal,html[data-theme="light"] .info-item,html[data-theme="light"] footer{transition:background-color .3s ease,border-color .3s ease,color .3s ease}
 
+
+/* ===================== RANDOM PICK ===================== */
+.btn.rnd{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--gold),var(--accent));color:#1a1a1a;box-shadow:0 4px 16px rgba(255,140,66,.3)}
+.btn.rnd::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:rndShine 3.6s ease-in-out infinite}
+@keyframes rndShine{0%,65%{left:-60%}100%{left:130%}}
+.btn.rnd:hover{filter:brightness(1.06)}
+.btn.rnd .dice{display:inline-block;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.btn.rnd:hover .dice{transform:rotate(200deg) scale(1.15)}
+.rp-modal{max-width:580px}
+.rp-intro{color:var(--muted);font-size:.86rem;margin-top:8px}
+.rp-filters{display:grid;gap:14px}
+.rp-f select{height:44px;border-radius:12px}
+.rp-pool{margin:16px 0 12px;font-size:.8rem;color:var(--muted);text-align:center}
+.rp-pool b{color:var(--accent);font-family:var(--head)}
+.reel-wrap{--rh:70px;position:relative;margin-bottom:16px}
+.reel{height:calc(var(--rh)*3);overflow:hidden;border-radius:16px;background:var(--panel2);border:1px solid var(--line);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 28%,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 28%,#000 72%,transparent 100%)}
+.reel-strip{will-change:transform}
+.reel-item{height:var(--rh);display:flex;align-items:center;gap:14px;padding:0 22px;transition:transform .3s}
+.reel-item .em{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.45rem;background:var(--panel)}
+.reel-item .tx{display:flex;flex-direction:column;min-width:0}
+.reel-item .nm{font-family:var(--head);font-weight:700;font-size:1.02rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reel-item .sb{font-size:.74rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reel-item.win{animation:winPop .6s ease}
+.reel-item.win .em{background:linear-gradient(135deg,var(--gold),var(--accent))}
+@keyframes winPop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.reel-frame{position:absolute;left:8px;right:8px;top:var(--rh);height:var(--rh);border:2px solid var(--accent);border-radius:14px;pointer-events:none;box-shadow:0 0 0 4px rgba(255,140,66,.12),0 0 24px rgba(255,140,66,.25)}
+.reel-frame::before,.reel-frame::after{content:'';position:absolute;top:50%;width:0;height:0;border:8px solid transparent;transform:translateY(-50%)}
+.reel-frame::before{left:-10px;border-left-color:var(--accent)}
+.reel-frame::after{right:-10px;border-right-color:var(--accent)}
+.reel-wrap.spinning .reel-frame{animation:framePulse .5s ease-in-out infinite alternate}
+@keyframes framePulse{from{box-shadow:0 0 0 4px rgba(255,140,66,.10),0 0 16px rgba(255,140,66,.2)}to{box-shadow:0 0 0 6px rgba(255,140,66,.22),0 0 32px rgba(255,140,66,.45)}}
+.rp-spin{width:100%;padding:15px;font-size:1rem;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1a1a1a}
+.rp-spin:disabled{opacity:.5;cursor:not-allowed}
+.rp-modal.busy .rp-filters{opacity:.5;pointer-events:none}
+.rp-result{display:none;margin-top:16px;padding:20px;border-radius:16px;border:1px solid var(--accent);background:radial-gradient(500px 160px at 0% 0%,rgba(255,140,66,.14),transparent 70%),var(--panel2)}
+.rp-result.show{display:block;animation:rpIn .45s cubic-bezier(.3,1.4,.5,1)}
+@keyframes rpIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+.rp-kicker{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);font-weight:700}
+.rp-result h3{font-size:1.45rem;font-weight:800;margin:6px 0 10px;letter-spacing:-.3px}
+.rp-result .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.rp-meta{font-size:.84rem;color:var(--muted);line-height:1.7}
+.rp-meta .rating{font-size:.88rem}
+.rp-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.rp-cta .btn{flex:1;min-width:140px;text-align:center}
+.rp-empty{text-align:center;color:var(--muted);padding:6px 0 2px;font-size:.88rem}
+html[data-theme="light"] .reel-item .em{background:#fff;box-shadow:0 1px 3px rgba(20,20,40,.08)}
+html[data-theme="light"] .rp-result{background:radial-gradient(500px 160px at 0% 0%,rgba(244,123,44,.10),transparent 70%),#fff}
+@media(max-width:600px){.reel-wrap{--rh:62px}.reel-item{padding:0 14px;gap:10px}.reel-item .em{width:38px;height:38px;font-size:1.25rem}.seg button{font-size:.74rem;padding:8px 4px}}
+@media(prefers-reduced-motion:reduce){.btn.rnd::after{animation:none}}
+
 @media(max-width:1000px){.f-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){
   .f-grid{grid-template-columns:1fr}
@@ -352,6 +403,7 @@ html[data-theme="light"] .card,html[data-theme="light"] .tcard,html[data-theme="
       <span id="geoInfo" style="display:none;margin-left:6px"></span>
     </div>
     <div class="sync-actions">
+      <button class="btn rnd" id="randomBtn"><span class="dice" aria-hidden="true">🎲</span> No idea? Random pick</button>
       <button class="btn ghost" id="recommendBtn">➕ Restaurant vorschlagen</button>
       <button class="btn" id="refreshBtn">🔄 Aktualisieren</button>
     </div>
@@ -449,6 +501,36 @@ html[data-theme="light"] .card,html[data-theme="light"] .tcard,html[data-theme="
 
 <!-- DETAIL MODAL -->
 <div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
+
+<!-- RANDOM PICK MODAL -->
+<div class="modal-bg" id="rpBg"><div class="modal rp-modal" id="rpModal" role="dialog" aria-modal="true" aria-labelledby="rpTitle">
+  <button class="close" id="rpClose" aria-label="Schließen">×</button>
+  <div class="modal-head">
+    <h2 id="rpTitle">🎲 No idea? Random pick</h2>
+    <p class="rp-intro">Wähle optional ein paar Wünsche – oder lass einfach den Zufall entscheiden.</p>
+  </div>
+  <div class="modal-body">
+    <div class="rp-filters">
+      <div class="rp-f"><div class="f-label">Küche</div>
+        <select id="rpCui"><option value="">Egal – überrasch mich</option></select></div>
+      <div class="rp-f"><div class="f-label">Preis</div>
+        <div class="seg" id="rpPrice"><button data-v="">Egal</button><button data-v="€">€</button><button data-v="€€">€€</button><button data-v="€€€">€€€</button><button data-v="€€€€">€€€€</button></div></div>
+      <div class="rp-f"><div class="f-label">Entfernung</div>
+        <div class="seg" id="rpDist"><button data-v="">Egal</button><button data-v="walk">🚶 Fußläufig</button><button data-v="car10">🚗 ≤ 10 min</button></div></div>
+    </div>
+
+    <div class="rp-pool" id="rpPool"></div>
+
+    <div class="reel-wrap" id="reelWrap">
+      <div class="reel"><div class="reel-strip" id="reelStrip"></div></div>
+      <div class="reel-frame" aria-hidden="true"></div>
+    </div>
+
+    <button class="btn rp-spin" id="rpSpin">🎲 Recommend me a restaurant</button>
+
+    <div class="rp-result" id="rpResult" aria-live="polite"></div>
+  </div>
+</div></div>
 
 <!-- RECOMMEND MODAL -->
 <div class="modal-bg" id="recBg"><div class="modal" id="recModal">
@@ -893,6 +975,100 @@ async function refreshAll(){
   catch(e){ console.error('Render-Fehler',e); DATA=FALLBACK.slice(); try{fillOptions();buildMarkers();render();}catch(_){} }
   $('refreshBtn').disabled=false;
 }
+
+/* ---------- RANDOM PICK (Slot-Machine) ---------- */
+const RP={cui:'',price:'',dist:'',last:null,token:0};
+function rpPool(){
+  return DATA.filter(r=>(!RP.cui||r.cuisine===RP.cui)
+    &&(!RP.price||S(r.price).trim()===RP.price)
+    &&(RP.dist!=='walk'||isWalk(r))
+    &&(RP.dist!=='car10'||(rate(r.dist)||99)<=10));
+}
+function rpItem(r){
+  return '<div class="reel-item" data-id="'+attr(r.id)+'"><span class="em">'+emo(r.cuisine)+'</span><span class="tx"><span class="nm">'+S(r.name)+'</span><span class="sb">'+S(r.cuisine)+' · '+S(r.price)+' · '+baseDistrict(r.district)+'</span></span></div>';
+}
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function rpIdle(){
+  const src=rpPool().length?rpPool():DATA;
+  $('reelStrip').style.transform='translate3d(0,0,0)';$('reelStrip').style.filter='none';
+  $('reelStrip').innerHTML=[0,1,2].map(()=>rpItem(rnd(src))).join('');
+}
+function rpSync(){
+  document.querySelectorAll('#rpPrice button').forEach(b=>b.classList.toggle('on',b.dataset.v===RP.price));
+  document.querySelectorAll('#rpDist button').forEach(b=>b.classList.toggle('on',b.dataset.v===RP.dist));
+  $('rpCui').value=RP.cui;
+  const n=rpPool().length;
+  $('rpPool').innerHTML=n?'<b>'+n+'</b> '+(n===1?'Restaurant':'Restaurants')+' im Lostopf':'<span class="rp-empty">😕 Keine Restaurants mit diesen Wünschen – lockere einen Filter.</span>';
+  $('rpSpin').disabled=!n;
+}
+function rpOpen(){
+  const cui=[...new Set(DATA.map(r=>r.cuisine).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'de'));
+  if(RP.cui&&!cui.includes(RP.cui))RP.cui='';
+  $('rpCui').innerHTML='<option value="">Egal – überrasch mich</option>'+cui.map(c=>'<option value="'+attr(c)+'">'+emo(c)+' '+c+'</option>').join('');
+  $('rpResult').className='rp-result';$('rpResult').innerHTML='';
+  $('rpSpin').textContent='🎲 Recommend me a restaurant';
+  rpSync(); rpIdle();
+  $('rpBg').classList.add('open');
+}
+function rpClose(){RP.token++;$('rpModal').classList.remove('busy');$('reelWrap').classList.remove('spinning');$('rpBg').classList.remove('open');}
+function rpChanged(){$('rpResult').className='rp-result';rpSync();rpIdle();$('rpSpin').textContent='🎲 Recommend me a restaurant';}
+
+function rpSpin(){
+  const pool=rpPool(); if(!pool.length)return;
+  let win=rnd(pool);
+  if(pool.length>1){let g=0;while(win.id===RP.last&&g++<20)win=rnd(pool);}
+  RP.last=win.id;
+  const fill=pool.length>=4?pool:DATA;
+  const N=46, W=N-3, items=[];
+  for(let i=0;i<N;i++){
+    if(i===W){items.push(win);continue;}
+    let r=rnd(fill),g=0; while(items.length&&r.id===items[items.length-1].id&&fill.length>1&&g++<10)r=rnd(fill);
+    items.push(r);
+  }
+  const strip=$('reelStrip'); strip.innerHTML=items.map(rpItem).join('');
+  strip.style.transform='translate3d(0,0,0)';
+  const H=strip.firstElementChild.offsetHeight||70;
+  const target=(W-1)*H;
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dur=reduce?1200:3800+Math.random()*900;
+  const my=++RP.token;
+  $('rpResult').className='rp-result';$('rpResult').innerHTML='';
+  $('rpModal').classList.add('busy');$('reelWrap').classList.add('spinning');
+  $('rpSpin').disabled=true;$('rpSpin').textContent='🎰 Suche läuft …';
+  const t0=performance.now();
+  const ease=p=>1-Math.pow(1-p,4);                       // schnell starten, sanft ausrollen
+  function frame(t){
+    if(my!==RP.token)return;
+    const p=Math.min(1,(t-t0)/dur), y=target*ease(p);
+    strip.style.transform='translate3d(0,'+(-y)+'px,0)';
+    strip.style.filter=(!reduce&&p<.5)?'blur('+((1-p/.5)*2.4).toFixed(2)+'px)':'none';
+    if(p<1){requestAnimationFrame(frame);return;}
+    strip.children[W].classList.add('win');
+    $('reelWrap').classList.remove('spinning');$('rpModal').classList.remove('busy');
+    setTimeout(()=>{if(my===RP.token)rpShow(win);},280);
+  }
+  requestAnimationFrame(frame);
+}
+function rpShow(r){
+  const maps='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(S(r.name)+' '+S(r.address));
+  const web=hasWeb(r)?'<a class="btn ghost" href="'+attr(r.website)+'" target="_blank" rel="noopener">🌐 Website</a>':'';
+  const wk=walkMin(r)!=null?' · 🚶 '+fmtMin(walkMin(r))+' min zu Fuß':(isWalk(r)?' · 🚶 fußläufig':'');
+  $('rpResult').innerHTML='<div class="rp-kicker">🎉 Unser Tipp für dich</div><h3>'+S(r.name)+'</h3>'+
+    '<div class="tags"><span class="tag cui">'+emo(r.cuisine)+' '+S(r.cuisine)+'</span><span class="tag">'+S(r.price)+'</span><span class="tag">'+baseDistrict(r.district)+'</span>'+(isRecommended(r)?'<span class="tag rec">👍 Team-Empfehlung</span>':'')+'</div>'+
+    '<div class="rp-meta">'+(r.rating?'<span class="rating">★ '+r.rating+'</span> <span>('+S(r.reviews)+')</span> · ':'')+'🚗 '+S(r.dist)+' min zum PwC Office'+wk+'<br>📍 '+S(r.address)+'</div>'+
+    '<div class="rp-cta"><button class="btn" id="rpDetails">🔎 Details &amp; Karte</button><a class="btn ghost" href="'+maps+'" target="_blank" rel="noopener">🗺️ Google Maps</a>'+web+'</div>';
+  $('rpResult').className='rp-result show';
+  $('rpDetails').addEventListener('click',()=>{const id=r.id;rpClose();openModal(id);});
+  $('rpSpin').disabled=false;$('rpSpin').textContent='🎲 Nochmal drehen';
+}
+$('randomBtn').addEventListener('click',rpOpen);
+$('rpClose').addEventListener('click',rpClose);
+$('rpBg').addEventListener('click',e=>{if(e.target.id==='rpBg')rpClose();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('rpBg').classList.contains('open'))rpClose();});
+$('rpCui').addEventListener('change',e=>{RP.cui=e.target.value;rpChanged();});
+$('rpPrice').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;RP.price=b.dataset.v;rpChanged();});
+$('rpDist').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;RP.dist=b.dataset.v;rpChanged();});
+$('rpSpin').addEventListener('click',rpSpin);
 
 /* ---------- RECOMMEND FORM ---------- */
 function openRec(){$('recBg').classList.add('open');}
