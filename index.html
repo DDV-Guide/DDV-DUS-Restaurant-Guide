@@ -478,7 +478,7 @@ html[data-theme="light"] .rp-result{background:radial-gradient(500px 160px at 0%
       <div class="adv-body">
         <div class="f-block"><div class="f-label">Atmosphäre / Vibe</div><div class="chips" id="vibeChips"></div></div>
         <div class="f-block"><div class="f-label">Reservierung</div>
-          <div class="seg" id="resSeg" style="max-width:620px"><button data-v="">Egal</button><button data-v="spontan">Spontan möglich</button><button data-v="req">Reservierung nötig</button><button data-v="groups">Gruppen-geeignet</button></div></div>
+          <div class="seg" id="resSeg" style="max-width:620px"><button data-v="">Egal</button><button data-v="rec">📅 Empfohlen</button><button data-v="pos">✅ Möglich</button><button data-v="no">🚫 Nicht möglich</button></div></div>
       </div>
     </details>
 
@@ -707,7 +707,19 @@ function walkText(r){const w=walkInfo(r);
   return w.yes?'Fußläufig (< '+WALK_MAX+' min)':'Nicht fußläufig';}
 const attr=s=>S(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
 const GROUP_L={Small:'Klein',Medium:'Mittel',Large:'Groß'};
-const RES_L={spontan:'Spontan möglich',req:'Reservierung nötig',groups:'Gruppen-geeignet'};
+const RES_L={rec:'Reservierung empfohlen',pos:'Reservierung möglich',no:'Reservierung nicht möglich'};
+/* Spalte "Reservation" im Sheet: Dropdown Recommended / Possible / Not possible
+   (ältere deutsche Werte wie "Empfohlen", "Möglich", "Erforderlich" werden ebenfalls erkannt) */
+function resCat(r){
+  const v=S(r.reservation).trim().toLowerCase();
+  if(!v)return '';
+  if(/not\s*possible|nicht\s*möglich|no\s*reserv|keine/.test(v))return 'no';
+  if(/recommend|empfohl|erforderlich|required|necessary|nötig/.test(v))return 'rec';
+  if(/possible|möglich/.test(v))return 'pos';
+  return '';
+}
+const RES_TXT={rec:'Empfohlen',pos:'Möglich',no:'Nicht möglich'};
+function resText(r){const c=resCat(r);return c?RES_TXT[c]:(S(r.reservation)||'—');}
 const SORT_L={az:'A → Z',za:'Z → A',recommended:'Team-Empfehlungen',rating:'Beste Google-Bewertung',reviews:'Meiste Reviews',dist:'Kürzeste Fahrzeit',walk:'Kürzester Fußweg',priceAsc:'Preis aufsteigend',priceDesc:'Preis absteigend'};
 const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').concat('#');
 function letterOf(n){const c=S(n).trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').charAt(0).toUpperCase();return /[A-Z]/.test(c)?c:'#';}
@@ -761,10 +773,7 @@ function passes(r){
   if(F.group.size&&!F.group.has(S(r.group).trim()))return false;
   if(F.district&&baseDistrict(r.district)!==F.district)return false;
   if(F.vibe.size&&![...F.vibe].some(l=>{const v=VIBES.find(x=>x[0]===l);return v&&v[1].test(vibeText(r));}))return false;
-  const res=S(r.reservation);
-  if(F.res==='spontan'&&/erforderlich/i.test(res))return false;
-  if(F.res==='req'&&!/erforderlich/i.test(res))return false;
-  if(F.res==='groups'&&!(/gruppe/i.test(res)||r.group==='Large'))return false;
+  if(F.res&&resCat(r)!==F.res)return false;
   if(F.dist<30&&(rate(r.dist)||99)>F.dist)return false;
   if(F.rate>0&&rate(r.rating)<F.rate)return false;
   if(F.rev>0&&num(r.reviews)<F.rev)return false;
@@ -920,7 +929,7 @@ function openModal(id){
   const home=(r.website&&r.website!=='N/A')?'<a href="'+r.website+'" target="_blank" rel="noopener">🌐 Zur Website</a>':'';
   const maps='<a class="ghost" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.name+' '+r.address)+'" target="_blank" rel="noopener">🗺️ In Google Maps</a>';
   $('modal').innerHTML='<button class="close" onclick="closeModal()">×</button><div class="modal-head"><h2>'+r.name+'</h2><div class="mtags"><span class="tag cui">'+r.cuisine+'</span><span class="tag">'+r.price+'</span><span class="tag">'+r.district+'</span>'+(isWalk(r)?'<span class="tag walk">🚶 Fußläufig'+(walkMin(r)!=null?' · '+fmtMin(walkMin(r))+' min':'')+'</span>':'')+(isRecommended(r)?'<span class="tag rec">👍 Team-Empfehlung</span>':'')+'</div></div><div class="modal-body"><p class="lead">'+r.desc+'</p><div class="info-grid">'+
-    item('📍 Adresse',r.address,true)+item('🍽️ Atmosphäre',r.atmosphere,true)+item('⭐ Google Bewertung',r.rating?(r.rating+' ★ · '+r.reviews+' Bewertungen'):'—')+item('👍 Team-Votes',v.up+' Likes · '+v.down+' Dislikes')+item('💶 Preis p. P.',r.eur+'  ('+r.price+')')+item('👥 Gruppengröße',r.group)+item('🚗 Fahrzeit PwC Office',S(r.dist)?r.dist+' min':'—')+item('🚶 Fußweg PwC Office',walkText(r))+item('📅 Reservierung',r.reservation||'—',true)+item('🌱 Vegetarisch / Vegan',r.veg,true)+'</div><div class="modal-cta">'+home+maps+'</div></div>';
+    item('📍 Adresse',r.address,true)+item('🍽️ Atmosphäre',r.atmosphere,true)+item('⭐ Google Bewertung',r.rating?(r.rating+' ★ · '+r.reviews+' Bewertungen'):'—')+item('👍 Team-Votes',v.up+' Likes · '+v.down+' Dislikes')+item('💶 Preis p. P.',r.eur+'  ('+r.price+')')+item('👥 Gruppengröße',r.group)+item('🚗 Fahrzeit PwC Office',S(r.dist)?r.dist+' min':'—')+item('🚶 Fußweg PwC Office',walkText(r))+item('📅 Reservierung',resText(r),true)+item('🌱 Vegetarisch / Vegan',r.veg,true)+'</div><div class="modal-cta">'+home+maps+'</div></div>';
   $('modalBg').classList.add('open');
 }
 function item(k,v,f){return '<div class="info-item'+(f?' full':'')+'"><div class="k">'+k+'</div><div class="v">'+(v||'—')+'</div></div>';}
