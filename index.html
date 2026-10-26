@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Theme vor dem Rendern setzen (kein Aufflackern) */try{var t=localStorage.getItem("ddv_theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <title>DDV Düsseldorf Restaurant Guide</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +17,9 @@
   --head:'Sora',sans-serif; --body:'Space Grotesk',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:dark}
 html,body{background:var(--bg);color:var(--txt);font-family:var(--body);-webkit-font-smoothing:antialiased}
+body{transition:background-color .3s ease,color .3s ease}
 a{color:var(--accent2);text-decoration:none} img{display:block} h1,h2,h3{font-family:var(--head)}
 
 :root{--hero-focus:50%}
@@ -149,11 +152,7 @@ footer b{color:var(--accent2)}
 .sortbox select{height:54px;border-radius:14px}
 .f-label{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;text-transform:uppercase;letter-spacing:.9px;color:var(--muted);margin-bottom:9px;font-weight:600}
 .f-label .range-val{float:none;font-size:.75rem;background:rgba(255,140,66,.12);border:1px solid rgba(255,140,66,.35);padding:2px 8px;border-radius:20px;letter-spacing:0;text-transform:none}
-.presets{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:18px}
-.presets .lbl,.active-row .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.9px;color:var(--muted);font-weight:600;margin-right:4px}
-.preset{background:linear-gradient(180deg,#202025,#19191d);border:1px solid var(--line);color:var(--txt);border-radius:12px;padding:8px 14px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:var(--body);transition:.18s}
-.preset:hover{border-color:var(--accent);transform:translateY(-1px)}
-.preset.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1a1a1a;border-color:transparent;box-shadow:0 6px 18px rgba(255,140,66,.3)}
+.active-row .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.9px;color:var(--muted);font-weight:600;margin-right:4px}
 .f-block{margin-top:18px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:#cfcfd6;cursor:pointer;font-size:.82rem;font-weight:600;font-family:var(--body);transition:.16s}
@@ -249,6 +248,66 @@ footer b{color:var(--accent2)}
 .abc-bubble.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .no-results .btn{margin-top:14px}
 
+
+/* ===================== THEME SWITCH ===================== */
+.theme-switch{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;margin-top:16px;padding:4px;border-radius:999px;background:rgba(10,10,11,.45);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.theme-switch button{position:relative;z-index:1;border:0;background:transparent;color:#ececf1;font-family:var(--head);font-weight:700;font-size:.78rem;padding:7px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:color .25s}
+.theme-switch button[aria-pressed="true"]{color:#1a1a1a}
+.theme-switch button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.theme-switch .knob{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 3px 12px rgba(255,140,66,.45);transition:transform .32s cubic-bezier(.4,1.35,.5,1)}
+html[data-theme="light"] .theme-switch .knob{transform:translateX(100%)}
+
+/* theme-aware status tags (Modal) */
+.tag.walk{color:var(--green);border-color:var(--green)}
+.tag.rec{color:#8ee0aa;border-color:var(--green)}
+
+/* ===================== LIGHT THEME ===================== */
+html[data-theme="light"]{color-scheme:light;
+  --bg:#f4f4f6; --panel:#ffffff; --panel2:#f2f2f5; --line:#e1e1e7;
+  --txt:#17171a; --muted:#62626d; --accent:#f47b2c; --accent2:#cf6119;
+  --gold:#b0731a; --green:#2a9257; --red:#cf4343}
+html[data-theme="light"] .syncbar,html[data-theme="light"] .toolbar,html[data-theme="light"] .top10,html[data-theme="light"] .card,html[data-theme="light"] .tcard{box-shadow:0 1px 3px rgba(20,20,40,.06)}
+html[data-theme="light"] .card:hover,html[data-theme="light"] .tcard:hover{box-shadow:0 12px 28px rgba(20,20,40,.13)}
+html[data-theme="light"] .card.active{box-shadow:0 0 0 2px var(--accent) inset}
+html[data-theme="light"] .tcard.rk1{box-shadow:0 0 0 1px rgba(232,163,61,.25),0 10px 26px rgba(232,163,61,.18)}
+html[data-theme="light"] .tcard.ph{box-shadow:none}
+html[data-theme="light"] .toolbar.fx{background:radial-gradient(900px 260px at 0% 0%,rgba(244,123,44,.09),transparent 60%),radial-gradient(700px 240px at 100% 100%,rgba(232,163,61,.06),transparent 60%),linear-gradient(180deg,#ffffff,#fbfbfc)}
+html[data-theme="light"] .search input[type=text]{background:#fff}
+html[data-theme="light"] .search input[type=text]:focus{box-shadow:0 0 0 4px rgba(244,123,44,.15)}
+html[data-theme="light"] .chip{color:#3b3b44}
+html[data-theme="light"] .chip .n{background:rgba(0,0,0,.06)}
+html[data-theme="light"] .chip.on,html[data-theme="light"] .chip.on .n{color:#1a1a1a}
+html[data-theme="light"] .seg button:hover{background:rgba(0,0,0,.045)}
+html[data-theme="light"] .rng{background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) var(--p,100%),#dcdce3 var(--p,100%))}
+html[data-theme="light"] .rng-scale{color:#8b8b95}
+html[data-theme="light"] .sw .tr{background:#d3d3da}
+html[data-theme="light"] .sw .tr::after{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+html[data-theme="light"] .adv{background:#fafafb}
+html[data-theme="light"] .tcard .rank{background:#ebebef}
+html[data-theme="light"] .tcard.ph .rank{border-color:#c8c8d0}
+html[data-theme="light"] .top-empty{border-color:#d4d4db}
+html[data-theme="light"] .abc{background:rgba(255,255,255,.94);box-shadow:0 4px 16px rgba(20,20,40,.08)}
+html[data-theme="light"] #map{background:#e8e8ed}
+html[data-theme="light"] .leaflet-popup-content-wrapper,html[data-theme="light"] .leaflet-popup-tip{background:#fff;box-shadow:0 6px 20px rgba(20,20,40,.18)}
+html[data-theme="light"] .leaflet-popup-content b{color:var(--accent2)}
+html[data-theme="light"] .modal-bg{background:rgba(24,24,32,.45)}
+html[data-theme="light"] .modal{box-shadow:0 30px 80px rgba(20,20,40,.28)}
+html[data-theme="light"] .modal-head{background:linear-gradient(135deg,#ffffff,#f3f3f6)}
+html[data-theme="light"] .modal-body .lead{color:#34343b}
+html[data-theme="light"] .vote.up.voted{background:rgba(42,146,87,.12);color:#1d7444}
+html[data-theme="light"] .vote.down.voted{background:rgba(207,67,67,.10);color:#b03434}
+html[data-theme="light"] .rec-badge,html[data-theme="light"] .tag.rec{color:#1d7444;background:rgba(42,146,87,.10)}
+html[data-theme="light"] .live{color:#1d7444;background:rgba(42,146,87,.10)}
+html[data-theme="light"] .tvotes .netv{color:#1d7444}
+html[data-theme="light"] .tbar i{background:linear-gradient(90deg,var(--green),#5cc98a)}
+html[data-theme="light"] .form-msg.ok{color:#1d7444;background:rgba(42,146,87,.10)}
+html[data-theme="light"] .form-msg.err{color:#b03434;background:rgba(207,67,67,.08)}
+html[data-theme="light"] .close:hover,html[data-theme="light"] .btn{color:#1a1a1a}
+html[data-theme="light"] .btn.ghost{color:var(--txt)}
+html[data-theme="light"] .btn.ghost:hover{background:var(--panel2)}
+html[data-theme="light"] .hero-overlay{background:linear-gradient(180deg,rgba(10,10,11,0) 0%,rgba(10,10,11,0) 45%,rgba(10,10,11,.45) 75%,rgba(10,10,11,.88) 100%)}
+html[data-theme="light"] .card,html[data-theme="light"] .tcard,html[data-theme="light"] .syncbar,html[data-theme="light"] .toolbar,html[data-theme="light"] .top10,html[data-theme="light"] .modal,html[data-theme="light"] .info-item,html[data-theme="light"] footer{transition:background-color .3s ease,border-color .3s ease,color .3s ease}
+
 @media(max-width:1000px){.f-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){
   .f-grid{grid-template-columns:1fr}
@@ -274,6 +333,11 @@ footer b{color:var(--accent2)}
     <h1><span class="ddv">DDV</span> Düsseldorf Restaurant Guide</h1>
     <div class="sub">Kuratierte Restaurant-Empfehlungen rund um das PwC Office Düsseldorf</div>
     <div class="credit">Idea and Design by Julian Glatter, Hannes Appelfeller &amp; Deniz Uysal</div>
+    <div class="theme-switch" id="themeSwitch" role="group" aria-label="Darstellung wählen">
+      <span class="knob" aria-hidden="true"></span>
+      <button type="button" data-theme="dark" aria-pressed="true">🌙 Dark</button>
+      <button type="button" data-theme="light" aria-pressed="false">☀️ Light</button>
+    </div>
   </div>
 </header>
 
@@ -323,13 +387,12 @@ footer b{color:var(--accent2)}
           <option value="rating">⭐ Beste Google-Bewertung</option>
           <option value="reviews">💬 Meiste Google-Reviews</option>
           <option value="dist">🚗 Kürzeste Fahrzeit</option>
+          <option value="walk">🚶 Kürzester Fußweg</option>
           <option value="priceAsc">💶 Preis aufsteigend</option>
           <option value="priceDesc">💎 Preis absteigend</option>
         </select>
       </div>
     </div>
-
-    <div class="presets" id="presets"><span class="lbl">Schnellauswahl</span></div>
 
     <div class="f-block"><div class="f-label">Küche</div><div class="chips" id="cuiChips"></div></div>
 
@@ -350,7 +413,7 @@ footer b{color:var(--accent2)}
     </div>
 
     <div class="toggles">
-      <label class="sw"><input type="checkbox" id="fWalk"><span class="tr"></span>🚶 Nur fußläufig</label>
+      <label class="sw"><input type="checkbox" id="fWalk"><span class="tr"></span>🚶 Nur fußläufig (&lt; 20 min)</label>
       <label class="sw"><input type="checkbox" id="fVeg"><span class="tr"></span>🌱 Vegetarisch/Vegan geeignet</label>
       <label class="sw"><input type="checkbox" id="fRec"><span class="tr"></span>👍 Nur Team-Empfehlungen</label>
     </div>
@@ -440,7 +503,7 @@ const NORMAL=dot('#ff8c42',1),ACTIVE=dot('#4caf72',1.6);
 let markers={};
 function buildMarkers(){
   Object.values(markers).forEach(m=>{if(map.hasLayer(m))map.removeLayer(m);}); markers={};
-  DATA.forEach(r=>{const m=L.marker([r.lat,r.lon],{icon:NORMAL}).bindPopup('<b>'+r.name+'</b><br>'+r.cuisine+'<br>'+r.address+(r.rating?'<br>★ '+r.rating+' ('+r.reviews+')':''));m.on('click',()=>openModal(r.id));markers[r.id]=m;});
+  DATA.forEach(r=>{const m=L.marker([r.lat,r.lon],{icon:NORMAL}).bindPopup('<b>'+r.name+'</b><br>'+r.cuisine+'<br>'+r.address+(r.rating?'<br>★ '+r.rating+' ('+r.reviews+')':'')+'<br>🚶 '+walkText(r));m.on('click',()=>openModal(r.id));markers[r.id]=m;});
 }
 
 const $=id=>document.getElementById(id);
@@ -457,11 +520,29 @@ const vibeText=r=>S(r.atmosphere)+' '+S(r.desc);
 const baseDistrict=d=>S(d).replace(/\s*\(.*?\)\s*/g,'').trim();
 const priceLvl=p=>S(p).length||0;
 const hasWeb=r=>!!(r.website&&r.website!=='N/A');
-const isWalk=r=>/^(yes|ja|y|j)$/i.test(S(r.walk).trim());
+/* Spalte "Walking Distance from PwC Office" enthält Y/N ODER Minuten zu Fuß.
+   Regel: Minuten < 20 → fußläufig; Y/Yes/Ja → fußläufig; N/No/leer → nicht fußläufig */
+const WALK_MAX=20;
+function walkInfo(r){
+  const v=S(r.walk).trim();
+  if(!v)return {min:null,yes:false};
+  if(/^(y|yes|ja|j|true|x)$/i.test(v))return {min:null,yes:true};
+  if(/^(n|no|nein|false|-|–)$/i.test(v))return {min:null,yes:false};
+  const m=v.replace(',','.').match(/\d+(?:\.\d+)?/);
+  if(m){const min=parseFloat(m[0]);return {min:min,yes:min<WALK_MAX};}
+  return {min:null,yes:/^(y|yes|ja)\b/i.test(v)};
+}
+const isWalk=r=>walkInfo(r).yes;
+const walkMin=r=>walkInfo(r).min;
+const fmtMin=m=>(Math.round(m*10)/10).toString().replace('.',',');
+const walkSortVal=r=>{const w=walkInfo(r);return w.min!=null?w.min:(w.yes?WALK_MAX-0.01:9999);};
+function walkText(r){const w=walkInfo(r);
+  if(w.min!=null)return fmtMin(w.min)+' min zu Fuß'+(w.yes?' · fußläufig':' · nicht fußläufig');
+  return w.yes?'Fußläufig (< '+WALK_MAX+' min)':'Nicht fußläufig';}
 const attr=s=>S(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
 const GROUP_L={Small:'Klein',Medium:'Mittel',Large:'Groß'};
 const RES_L={spontan:'Spontan möglich',req:'Reservierung nötig',groups:'Gruppen-geeignet'};
-const SORT_L={az:'A → Z',za:'Z → A',recommended:'Team-Empfehlungen',rating:'Beste Google-Bewertung',reviews:'Meiste Reviews',dist:'Kürzeste Fahrzeit',priceAsc:'Preis aufsteigend',priceDesc:'Preis absteigend'};
+const SORT_L={az:'A → Z',za:'Z → A',recommended:'Team-Empfehlungen',rating:'Beste Google-Bewertung',reviews:'Meiste Reviews',dist:'Kürzeste Fahrzeit',walk:'Kürzester Fußweg',priceAsc:'Preis aufsteigend',priceDesc:'Preis absteigend'};
 const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').concat('#');
 function letterOf(n){const c=S(n).trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').charAt(0).toUpperCase();return /[A-Z]/.test(c)?c:'#';}
 function abcCmp(a,b){return (LETTERS.indexOf(letterOf(a.name))-LETTERS.indexOf(letterOf(b.name)))||S(a.name).localeCompare(S(b.name),'de',{sensitivity:'base',numeric:true});}
@@ -472,19 +553,8 @@ const rate=v=>parseFloat(S(v).replace(',','.'))||0;
 
 /* ---------- FILTER STATE ---------- */
 const F={};
-function resetState(){Object.assign(F,{q:'',cui:new Set(),price:new Set(),group:new Set(),district:'',vibe:new Set(),res:'',dist:30,rate:0,rev:0,walk:false,veg:false,rec:false,sort:'az',preset:''});}
+function resetState(){Object.assign(F,{q:'',cui:new Set(),price:new Set(),group:new Set(),district:'',vibe:new Set(),res:'',dist:30,rate:0,rev:0,walk:false,veg:false,rec:false,sort:'az'});}
 resetState();
-
-const PRESETS={
-  lunch:{l:'🍝 Business Lunch',f:()=>{F.price=new Set(['€','€€']);F.dist=12;}},
-  client:{l:'🥂 Kundenessen',f:()=>{F.price=new Set(['€€€','€€€€']);F.rate=4.4;}},
-  team:{l:'🎉 Team-Event',f:()=>{F.group=new Set(['Large']);}},
-  near:{l:'📍 Um die Ecke (≤ 8 min)',f:()=>{F.dist=8;}},
-  fine:{l:'✨ Fine Dining',f:()=>{F.price=new Set(['€€€€']);}},
-  veggie:{l:'🌱 Veggie-friendly',f:()=>{F.veg=true;F.rate=4.4;}},
-  fav:{l:'🏆 Team-Favoriten',f:()=>{F.rec=true;F.sort='recommended';}}
-};
-$('presets').insertAdjacentHTML('beforeend',Object.entries(PRESETS).map(([k,p])=>'<button class="preset" data-p="'+k+'">'+p.l+'</button>').join(''));
 
 function fillOptions(){
   const cc={};DATA.forEach(r=>{if(r.cuisine)cc[r.cuisine]=(cc[r.cuisine]||0)+1;});
@@ -508,7 +578,6 @@ function syncUI(){
   document.querySelectorAll('#priceSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v?F.price.has(b.dataset.v):!F.price.size));
   document.querySelectorAll('#groupSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v?F.group.has(b.dataset.v):!F.group.size));
   document.querySelectorAll('#resSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v===F.res));
-  document.querySelectorAll('#presets .preset').forEach(b=>b.classList.toggle('on',b.dataset.p===F.preset));
   $('fDistrict').value=F.district; $('fSort').value=F.sort;
   $('fDist').value=F.dist; $('distVal').textContent=F.dist>=30?'alle':'≤ '+F.dist+' min';
   $('fRate').value=F.rate; $('rateVal').textContent=(+F.rate).toFixed(1)+' ★';
@@ -545,6 +614,7 @@ function sortList(list){
     case 'rating':return list.sort((a,b)=>rate(b.rating)-rate(a.rating)||abcCmp(a,b));
     case 'reviews':return list.sort((a,b)=>num(b.reviews)-num(a.reviews)||abcCmp(a,b));
     case 'dist':return list.sort((a,b)=>(rate(a.dist)||99)-(rate(b.dist)||99)||abcCmp(a,b));
+    case 'walk':return list.sort((a,b)=>walkSortVal(a)-walkSortVal(b)||abcCmp(a,b));
     case 'priceAsc':return list.sort((a,b)=>priceLvl(a.price)-priceLvl(b.price)||abcCmp(a,b));
     case 'priceDesc':return list.sort((a,b)=>priceLvl(b.price)-priceLvl(a.price)||abcCmp(a,b));
     default:return list.sort(abcCmp);
@@ -560,7 +630,7 @@ function cardEl(r){
   const recB=isRecommended(r)?'<span class="rec-badge">👍 Team-Empfehlung</span>':'';
   const c=document.createElement('div'); c.className='card'+(r.id==activeId?' active':''); c.dataset.id=r.id;
   c.innerHTML=wb+'<h3>'+S(r.name)+'</h3><div class="tags"><span class="tag cui">'+S(r.cuisine)+'</span><span class="tag">'+S(r.price)+'</span><span class="tag">'+S(r.group)+'</span></div>'+
-    '<div class="meta"><div><span class="ic">📍</span>'+S(r.address)+'</div><div><span class="ic">🏙️</span>'+S(r.district)+'</div><div><span class="ic">🚗</span>'+S(r.dist)+' min zum PwC Office</div></div>'+
+    '<div class="meta"><div><span class="ic">📍</span>'+S(r.address)+'</div><div><span class="ic">🏙️</span>'+S(r.district)+'</div><div><span class="ic">🚗</span>'+S(r.dist)+' min zum PwC Office</div>'+(walkMin(r)!=null?'<div><span class="ic">🚶</span>'+fmtMin(walkMin(r))+' min zu Fuß</div>':'')+'</div>'+
     '<div class="foot">'+rt+hl+'</div>'+
     '<div class="votes">'+
       '<button class="vote up'+(mine==='up'?' voted':'')+'" data-k="'+encodeURIComponent(key(r))+'" data-v="up">👍 <span class="c">'+v.up+'</span></button>'+
@@ -605,7 +675,7 @@ function renderActive(){
   if(F.dist<30)ACT.push(['🚗 ≤ '+F.dist+' min',()=>{F.dist=30;}]);
   if(F.rate>0)ACT.push(['⭐ ≥ '+(+F.rate).toFixed(1),()=>{F.rate=0;}]);
   if(F.rev>0)ACT.push(['💬 ≥ '+F.rev.toLocaleString('de-DE')+' Reviews',()=>{F.rev=0;}]);
-  if(F.walk)ACT.push(['🚶 Fußläufig',()=>{F.walk=false;}]);
+  if(F.walk)ACT.push(['🚶 Fußläufig (< '+WALK_MAX+' min)',()=>{F.walk=false;}]);
   if(F.veg)ACT.push(['🌱 Veggie',()=>{F.veg=false;}]);
   if(F.rec)ACT.push(['👍 Team-Empfehlung',()=>{F.rec=false;}]);
   const box=$('activeChips');
@@ -683,8 +753,8 @@ function openModal(id){
   const v=votesOf(r);
   const home=(r.website&&r.website!=='N/A')?'<a href="'+r.website+'" target="_blank" rel="noopener">🌐 Zur Website</a>':'';
   const maps='<a class="ghost" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.name+' '+r.address)+'" target="_blank" rel="noopener">🗺️ In Google Maps</a>';
-  $('modal').innerHTML='<button class="close" onclick="closeModal()">×</button><div class="modal-head"><h2>'+r.name+'</h2><div class="mtags"><span class="tag cui">'+r.cuisine+'</span><span class="tag">'+r.price+'</span><span class="tag">'+r.district+'</span>'+(r.walk.toLowerCase()==='yes'?'<span class="tag" style="color:#4caf72;border-color:#4caf72">🚶 Fußläufig</span>':'')+(isRecommended(r)?'<span class="tag" style="color:#8ee0aa;border-color:#4caf72">👍 Team-Empfehlung</span>':'')+'</div></div><div class="modal-body"><p class="lead">'+r.desc+'</p><div class="info-grid">'+
-    item('📍 Adresse',r.address,true)+item('🍽️ Atmosphäre',r.atmosphere)+item('⭐ Google Bewertung',r.rating?(r.rating+' ★ · '+r.reviews+' Bewertungen'):'—')+item('👍 Team-Votes',v.up+' Likes · '+v.down+' Dislikes')+item('💶 Preis p. P.',r.eur+'  ('+r.price+')')+item('👥 Gruppengröße',r.group)+item('🚗 Fahrzeit PwC Office',r.dist+' min'+(r.walk.toLowerCase()==='yes'?' · fußläufig':''))+item('📅 Reservierung',r.reservation||'—',true)+item('🌱 Vegetarisch / Vegan',r.veg,true)+'</div><div class="modal-cta">'+home+maps+'</div></div>';
+  $('modal').innerHTML='<button class="close" onclick="closeModal()">×</button><div class="modal-head"><h2>'+r.name+'</h2><div class="mtags"><span class="tag cui">'+r.cuisine+'</span><span class="tag">'+r.price+'</span><span class="tag">'+r.district+'</span>'+(isWalk(r)?'<span class="tag walk">🚶 Fußläufig'+(walkMin(r)!=null?' · '+fmtMin(walkMin(r))+' min':'')+'</span>':'')+(isRecommended(r)?'<span class="tag rec">👍 Team-Empfehlung</span>':'')+'</div></div><div class="modal-body"><p class="lead">'+r.desc+'</p><div class="info-grid">'+
+    item('📍 Adresse',r.address,true)+item('🍽️ Atmosphäre',r.atmosphere,true)+item('⭐ Google Bewertung',r.rating?(r.rating+' ★ · '+r.reviews+' Bewertungen'):'—')+item('👍 Team-Votes',v.up+' Likes · '+v.down+' Dislikes')+item('💶 Preis p. P.',r.eur+'  ('+r.price+')')+item('👥 Gruppengröße',r.group)+item('🚗 Fahrzeit PwC Office',S(r.dist)?r.dist+' min':'—')+item('🚶 Fußweg PwC Office',walkText(r))+item('📅 Reservierung',r.reservation||'—',true)+item('🌱 Vegetarisch / Vegan',r.veg,true)+'</div><div class="modal-cta">'+home+maps+'</div></div>';
   $('modalBg').classList.add('open');
 }
 function item(k,v,f){return '<div class="info-item'+(f?' full':'')+'"><div class="k">'+k+'</div><div class="v">'+(v||'—')+'</div></div>';}
@@ -720,7 +790,7 @@ async function loadVotes(){
 function parseCSV(t){const rows=[];let row=[],cur='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=ch;}else{if(ch==='"')q=true;else if(ch===','){row.push(cur);cur='';}else if(ch==='\n'){row.push(cur);rows.push(row);row=[];cur='';}else if(ch==='\r'){}else cur+=ch;}}if(cur!==''||row.length){row.push(cur);rows.push(row);}return rows;}
 function norm(s){return (s||'').toString().trim().toLowerCase();}
 const HEADERMAP={'name':'name','address':'address','adresse':'address','cuisine type':'cuisine','cuisine':'cuisine','atmosphere':'atmosphere','brief description':'desc','description':'desc','price range p.p.':'price','price range':'price','est. eur range p.p.':'eur','eur range':'eur','group size':'group','distance to pwc (min)':'dist','distance to pwc':'dist','walking distance from pwc office (y/n)':'walk','walking distance':'walk','district':'district','google rating':'rating','google review count':'reviews','website':'website','reservation / group note':'reservation','reservation':'reservation','vegetarian / vegan':'veg','vegetarian':'veg','id':'id'};
-function rowsToRecords(rows){if(!rows.length)return [];const head=rows[0].map(h=>HEADERMAP[norm(h)]||norm(h));const out=[];for(let i=1;i<rows.length;i++){const r=rows[i];if(!r||r.every(c=>!c||!c.trim()))continue;const o={};head.forEach((k,j)=>o[k]=(r[j]||'').trim());if(!o.name)continue;const c=COORDS[o.name]||{lat:PWC.lat,lon:PWC.lon};o.lat=c.lat;o.lon=c.lon;o.id=o.id||('row'+i);o.walk=o.walk||'';o.rating=o.rating||'';o.reviews=o.reviews||'';out.push(o);}return out;}
+function rowsToRecords(rows){if(!rows.length)return [];const head=rows[0].map(h=>HEADERMAP[norm(h)]||(/walk|fußweg|fussweg|zu fuß|gehzeit/.test(norm(h))?'walk':norm(h)));const out=[];for(let i=1;i<rows.length;i++){const r=rows[i];if(!r||r.every(c=>!c||!c.trim()))continue;const o={};head.forEach((k,j)=>o[k]=(r[j]||'').trim());if(!o.name)continue;const c=COORDS[o.name]||{lat:PWC.lat,lon:PWC.lon};o.lat=c.lat;o.lon=c.lon;o.id=o.id||('row'+i);o.walk=o.walk||'';o.rating=o.rating||'';o.reviews=o.reviews||'';out.push(o);}return out;}
 
 function setStatus(cls){$('syncDot').className='st '+cls;}
 function stamp(){$('lastUpdate').textContent=new Date().toLocaleString('de-DE',{dateStyle:'medium',timeStyle:'short'});}
@@ -762,10 +832,10 @@ $('rSubmit').addEventListener('click',async ()=>{
 });
 
 /* ---------- BINDINGS ---------- */
-function changed(){F.preset='';syncUI();render();}
+function changed(){syncUI();render();}
 function resetAll(){resetState();syncUI();activeId=null;render();map.flyTo([51.235,6.775],13,{duration:.6});}
 let qT=null;
-$('fSearch').addEventListener('input',e=>{F.q=e.target.value.trim();$('sClear').classList.toggle('show',!!F.q);clearTimeout(qT);qT=setTimeout(()=>{F.preset='';syncUI();render();},140);});
+$('fSearch').addEventListener('input',e=>{F.q=e.target.value.trim();$('sClear').classList.toggle('show',!!F.q);clearTimeout(qT);qT=setTimeout(()=>{syncUI();render();},140);});
 $('sClear').addEventListener('click',()=>{F.q='';$('fSearch').value='';changed();$('fSearch').focus();});
 document.addEventListener('keydown',e=>{if(e.key==='/'&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();$('fSearch').focus();}});
 $('cuiChips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const c=b.dataset.cui;if(!c)F.cui.clear();else F.cui.has(c)?F.cui.delete(c):F.cui.add(c);changed();});
@@ -778,10 +848,19 @@ $('fDist').addEventListener('input',e=>{F.dist=+e.target.value;changed();});
 $('fRate').addEventListener('input',e=>{F.rate=+e.target.value;changed();});
 $('fRev').addEventListener('input',e=>{F.rev=+e.target.value;changed();});
 [['fWalk','walk'],['fVeg','veg'],['fRec','rec']].forEach(([id,k])=>$(id).addEventListener('change',e=>{F[k]=e.target.checked;changed();}));
-$('presets').addEventListener('click',e=>{const b=e.target.closest('.preset');if(!b)return;const k=b.dataset.p;const was=F.preset===k;resetState();if(!was){PRESETS[k].f();F.preset=k;}syncUI();render();});
 $('activeChips').addEventListener('click',e=>{const a=e.target.closest('.achip');if(a){ACT[+a.dataset.i][1]();changed();return;}if(e.target.closest('[data-clear]'))resetAll();});
 $('reset').addEventListener('click',resetAll);
 $('refreshBtn').addEventListener('click',refreshAll);
+
+/* ---------- THEME (Dark / Light) ---------- */
+function applyTheme(t){
+  t=(t==='light')?'light':'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  try{localStorage.setItem('ddv_theme',t);}catch(e){}
+  document.querySelectorAll('#themeSwitch button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===t)));
+}
+$('themeSwitch').addEventListener('click',e=>{const b=e.target.closest('button');if(b)applyTheme(b.dataset.theme);});
+applyTheme(document.documentElement.getAttribute('data-theme'));
 
 /* Likes regelmäßig aus dem Google Sheet nachladen → Top 10 bleibt live */
 setInterval(async()=>{if(!API_URL||document.hidden)return;const before=JSON.stringify(VOTES);await loadVotes();if(JSON.stringify(VOTES)!==before)render();},90000);
