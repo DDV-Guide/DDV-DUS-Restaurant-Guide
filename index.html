@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+  Düsseldorf Restaurant Guide
+  © 2026 Julian Glatter, Hannes Appelfeller & Deniz Uysal. Alle Rechte vorbehalten.
+  Idea, Design & Code: Julian Glatter, Hannes Appelfeller & Deniz Uysal.
+  Kopieren, Veränderung oder Weiterverwendung nur mit ausdrücklicher Zustimmung der Urheber.
+-->
 <html lang="de" data-theme="dark">
 <head>
 <meta charset="UTF-8">
@@ -558,6 +564,7 @@ html[data-theme="light"] .rp-result{background:radial-gradient(500px 160px at 0%
   <b>Düsseldorf Restaurant Guide</b> &nbsp;·&nbsp; Idea and Design by Julian Glatter, Hannes Appelfeller &amp; Deniz Uysal<br>
   Google-Bewertungen &amp; Websites ohne Gewähr · Kartendaten © OpenStreetMap-Mitwirkende
   <div class="disclaimer" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:.72rem;line-height:1.5;opacity:.85"><b>Disclaimer:</b> This is a privately created and operated website and is not affiliated with, endorsed by, or operated by PwC. PwC assumes no responsibility or liability for the content, restaurant recommendations, directions, or other information provided on this website.</div>
+  <div class="copyright" style="margin-top:10px;font-size:.72rem;line-height:1.5;opacity:.85">© 2026 Julian Glatter, Hannes Appelfeller &amp; Deniz Uysal. Alle Rechte vorbehalten. Design, Code und Inhalte dieser Seite sind urheberrechtlich geschützt. Kopieren, Veränderung oder Weiterverwendung – ganz oder in Teilen – nur mit ausdrücklicher Zustimmung der Urheber.</div>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -568,12 +575,14 @@ const PWC      = {"lat": 51.254, "lon": 6.7745, "name": "PwC Office Düsseldorf"
 /* Optional: exakte PwC-Koordinaten fest eintragen (z. B. aus Google Maps: Rechtsklick → Koordinaten kopieren).
    Beispiel: const PWC_FIXED = [51.2xxxx, 6.7xxxx];   null = automatisch per Adresse ermitteln */
 const PWC_FIXED = null;
-const SHEET_ID = "1yEsSfySLsIKK9a1YjZQ0uGnvHvhvCpub8Wd6XZKLxx4";
+const SHEET_ID = "1XtMX8dA1kCS5UC5VhWSQoOkVdAt0oFYbZ9sDqWqii0U";
 const GVIZ_URL = "https://docs.google.com/spreadsheets/d/"+SHEET_ID+"/gviz/tq?tqx=out:csv&sheet=Restaurant Database";
 
 /* === APPS SCRIPT WEB-APP URL (für Likes + Vorschläge) ===
    Nach dem Deploy (siehe Anleitung) hier die /exec-URL eintragen: */
-const API_URL = "https://script.google.com/macros/s/AKfycbzIJ2VJfA0FMOzDMpTG3TKA0aZB0pYWqkx2qM6Jcwl33ClPcKbLXzLXbsQOZuOqt3WBew/exec"; // z.B. "https://script.google.com/macros/s/AKfyc.../exec"
+/* Apps-Script Web-App (/exec-URL) */
+const API_URL_NEU = "https://script.google.com/macros/s/AKfycbwPPNxhfdoUZER_IdEH-0yfhbQWfyBPhBUfYKLfVKZBJOKKcsny83JxdSCF1pyyF6FA8g/exec";
+const API_URL = /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(API_URL_NEU.trim()) ? API_URL_NEU.trim() : ""; // z.B. "https://script.google.com/macros/s/AKfyc.../exec"
 
 let DATA = FALLBACK.slice();
 let VOTES = {};   // {key:{up:n,down:n}}
